@@ -62,7 +62,15 @@ let t = `
         </div>
       </div>
     </li>
-    <li id="bar"><h1>EmojiChats</h1><h3>Emoji Sent: {{messages.length}}</h3></li>
+    <li id="bar">
+      <h1>EmojiChats</h1>
+      <div class="extrainfo">
+        <p>*Slack inspired shortcodes :smile: --> <img src="/images/emoji/1f603.png" /> </p>
+        <p class="late">*Vue + Elixir + Phoenix Framework <a href="#">view on Github</a></p>
+        <p class="early">*<a href="https://www.emojione.com">EmojiOne</a>Licence emojies</p>
+      </div>
+      <h3>Emoji Sent: {{messages.length}}</h3>
+    </li>
   </ul>
 </div>
 `

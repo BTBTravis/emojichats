@@ -11,6 +11,7 @@ main {
   width: 100vw;
   display: flex;
   justify-content: center;
+  background: #e2e2e2;
 }
 #wrapper {
   height: 100vh;
@@ -160,6 +161,32 @@ input:focus {
   left: auto;
   right: -10px;
 }
+.extrainfo {
+  max-height: 8vh;
+  display: flex;
+  flex-direction: column;
+}
+.extrainfo img {
+  max-height: 25px;
+  margin-left: 5px;
+}
+.extrainfo p {
+  margin: 0;
+  display: flex;
+  align-itmes: center;
+}
+.extrainfo a {
+  color: white;
+}
+.extrainfo .early a {
+  margin-right: 4px;
+}
+.extrainfo .late a {
+  margin-left: 4px;
+}
+
+
+
 ::-webkit-scrollbar{
   width: 5px;
   /*margin-right: 10px;*/
