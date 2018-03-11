@@ -24,7 +24,7 @@ main {
   padding: 0;
   height: 100vh;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: auto 8vh auto;
+  grid-template-rows: 46vh 8vh 46vh;
 }
 #bar {
   background-color: #454545;
@@ -120,17 +120,23 @@ input:focus {
   margin-right: 3px;
 }
 .feed {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
   height: 100%;
   padding: 0;
   list-style: none;
   padding: 0 2em;
+  overflow-y: scroll;
+  /*box-sizing: border-box;*/
+}
+.feed > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 .feed li {
   position: relative;
   display: flex;
+  min-height: 53px;
+  box-sizing: border-box;
   /*padding: 0 10px;*/
 }
 .feed img {
@@ -153,4 +159,24 @@ input:focus {
   border: 1px solid black;
   left: auto;
   right: -10px;
+}
+::-webkit-scrollbar{
+  width: 5px;
+  /*margin-right: 10px;*/
+}
+
+::-webkit-scrollbar-track-piece{
+  /*background-color: #FFF;*/
+  background-color: none;
+}
+
+::-webkit-scrollbar-thumb{
+  background-color: #CBCBCB;
+  outline: 2px solid #FFF;
+  outline-offset: -2px;
+  border: .1px solid #B7B7B7;
+}
+
+::-webkit-scrollbar-thumb:hover{
+  background-color: #909090;
 }

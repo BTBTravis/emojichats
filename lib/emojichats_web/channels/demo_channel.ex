@@ -20,12 +20,13 @@ defmodule EmojichatsWeb.DemoChannel do
 
   # It is also common to receive messages from the client and
   # broadcast to everyone in the current topic (demo:lobby).
-  def handle_in("shout", payload, socket) do
-    broadcast socket, "shout", payload
-    {:noreply, socket}
-  end
+  #def handle_in("shout", payload, socket) do
+    #broadcast socket, "shout", payload
+    #{:noreply, socket}
+  #end
 
   def handle_in("message", payload, socket) do
+    Emojichats.Chat.create_message(payload)
     broadcast socket, "message", payload
     {:noreply, socket}
   end

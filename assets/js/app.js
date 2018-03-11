@@ -34,13 +34,15 @@ let t = `
 <div id="wrapper">
   <ul id="usergrid">
     <li v-for="(user,index) in users" class="user"  :style="{ 'background-color': colors[index] }">
-      <ul class="feed">
-        <li v-for="message in prettyMessages" :class="{ owned: message.user == index }" >
-          <div class="message">
-            <img v-for="emoji in message.prettyParts" :src="'/images/emoji/' + emoji + '.png'"  />
-          </div>
-          <div class="userDot" :style="{ 'background-color': colors[message.user] }"></div>
-        </li>
+      <ul class="feed" :ref="'feed' + index">
+        <div>
+          <li v-for="message in prettyMessages" :class="{ owned: message.user == index }" >
+            <div class="message">
+              <img v-for="emoji in message.prettyParts" :src="'/images/emoji/' + emoji + '.png'"  />
+            </div>
+            <div class="userDot" :style="{ 'background-color': colors[message.user] }"></div>
+          </li>
+        </div>
       </ul>
       <ul class="typing-feed"></ul>
       <div class="input-wrapper">
@@ -80,6 +82,10 @@ let vue_config = {
     activeColor: 'red',
     message: 'Hello'
   },
+  mounted: function () {
+    console.log("MOUNTED");
+    this.scrollBot();
+  },
   methods: {
     nextHighlight: function (i) {
       let user = this.users[i];
@@ -110,7 +116,17 @@ let vue_config = {
       console.log({"message": message});
       channel.push('message', { user: i, message: message });
       user.message = "";
-    }
+      //this.scrollBot();
+    },
+    scrollBot: function () {
+      this.users.map(function (user, i) {
+        this.$nextTick(function(){
+          let el = this.$refs['feed' + i][0];
+          el.scrollTop = el.scrollHeight;
+          //console.log({"ref": this.$refs['feed' + i]});
+        });
+      }.bind(this));
+    },
   },
   computed: {
     colors: function () {
@@ -184,6 +200,7 @@ let vue_config = {
     channel.on("message", data => {
       console.log({"message": data});
       vm.messages.push(data);
+      vm.scrollBot();
     })
   });
 })();
