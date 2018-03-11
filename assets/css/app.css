@@ -1,0 +1,121 @@
+/* This file is for your main application css. */
+* {
+  font-family: 'Roboto', sans-serif;
+}
+body, html{
+  margin: 0;
+  padding: 0;
+}
+main {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+#wrapper {
+  height: 100vh;
+  width: 80vw;
+  max-width: 1024px;
+}
+#usergrid {
+  margin: 0;
+  list-style: none;
+  display: grid;
+  padding: 0;
+  height: 100vh;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto 8vh auto;
+}
+#bar {
+  background-color: #454545;
+  color: white;
+  grid-column: 1 / span 4;
+  grid-row: 2 / span 1;
+  display: flex;
+  align-items: center;
+  padding: 0 3em;
+  justify-content: space-between;
+}
+h1,h3 {
+  margin: 0;
+  font-size: 36px;
+  font-style: italic;
+}
+h3 {
+  font-weight: lighter;
+}
+.user {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: inset 0 0 10px #333;
+}
+.input-wrapper {
+  width: 80%;
+  margin: 2em auto;
+  padding: 0 .5em;
+  box-sizing: border-box;
+  height: 32px;
+  background-color: white;
+  box-shadow: 2px 2px 10px #333;
+  position: relative;
+}
+input {
+  border: 0;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+input:focus {
+  outline: none;
+}
+.helper {
+  width: 213px;
+  /*height: 200px;*/
+  display: grid;
+  grid-template-rows: 20px auto 20px auto;
+  box-shadow: 2px 2px 10px #333;
+  background-color: white;
+  position: absolute;
+  bottom: 40px;
+  left: 10px;
+  font-size: 12px;
+}
+.helper > div {
+  overflow: hidden;
+}
+
+.helper .title {
+  background-color: #C4C4C4;
+  display: flex;
+  align-items: center;
+  padding: 0 .25em;
+}
+.helper p {
+  margin: 0;
+}
+.helper img {
+  max-height: 25px;
+}
+.searchemoji {
+  display:  flex;
+  align-items:  center;
+  margin: 2px 3px 0 0;
+  border-radius: 10px;
+  padding: 1px 4px;
+}
+.searchemoji.hightlight {
+  background: #C4C4C4;
+}
+.results {
+  display: flex;
+  max-height:100px;
+  flex-wrap: wrap;
+}
+.messagePreview {
+  padding: 1px 4px;
+}
+.messagePreview img {
+  margin-right: 3px;
+}
