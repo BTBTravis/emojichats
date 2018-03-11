@@ -119,3 +119,38 @@ input:focus {
 .messagePreview img {
   margin-right: 3px;
 }
+.feed {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  padding: 0;
+  list-style: none;
+  padding: 0 2em;
+}
+.feed li {
+  position: relative;
+  display: flex;
+  /*padding: 0 10px;*/
+}
+.feed img {
+  max-height: 45px;
+}
+.feed .userDot {
+  height: 8px;
+  width: 8px;
+  background-color: black;
+  border-radius: 5px;
+  position: absolute;
+  top: 0;
+  left: -10px;
+}
+
+.feed li.owned {
+  justify-content: flex-end;
+}
+.feed .owned .userDot {
+  border: 1px solid black;
+  left: auto;
+  right: -10px;
+}

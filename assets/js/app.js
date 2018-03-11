@@ -27,11 +27,21 @@ let es = Object.keys(e).map(function (key) {
   return e[key];
 });
 console.log({"es": es});
+
+let channel = socket.channel("demo:lobby", {})
+
 let t = `
 <div id="wrapper">
   <ul id="usergrid">
     <li v-for="(user,index) in users" class="user"  :style="{ 'background-color': colors[index] }">
-      <ul class="feed"></ul>
+      <ul class="feed">
+        <li v-for="message in prettyMessages" :class="{ owned: message.user == index }" >
+          <div class="message">
+            <img v-for="emoji in message.prettyParts" :src="'/images/emoji/' + emoji + '.png'"  />
+          </div>
+          <div class="userDot" :style="{ 'background-color': colors[message.user] }"></div>
+        </li>
+      </ul>
       <ul class="typing-feed"></ul>
       <div class="input-wrapper">
         <input v-model="users[index].message" v-on:keydown.9.prevent="nextHighlight(index)" v-on:keydown.enter.prevent="addWord(index)" >
@@ -50,7 +60,7 @@ let t = `
         </div>
       </div>
     </li>
-    <li id="bar"><h1>EmojiChats</h1><h3>Emoji Sent: #</h3></li>
+    <li id="bar"><h1>EmojiChats</h1><h3>Emoji Sent: {{messages.length}}</h3></li>
   </ul>
 </div>
 `
@@ -62,7 +72,7 @@ for(let i = 0; i < userCount; i++) {
     searchHighlight: 0
   });
 }
-var vm = new vue({
+let vue_config = {
   el: '#app',
   template: t,
   data: {
@@ -78,7 +88,10 @@ var vm = new vue({
     },
     addWord: function (i) {
       let user = this.users[i];
-      if(! this.searchResults[i]) return false;
+      if(! this.searchResults[i]) {
+        this.sendMessage(i);
+        return false;
+      }
       let result = this.searchResults[i][user.searchHighlight];
       let termRX = RegExp(':[a-z]+$','g');
       let newMessage = this.users[i].message.replace(termRX, function (match){
@@ -86,6 +99,17 @@ var vm = new vue({
       });
       this.users[i].message = newMessage;
       this.users[i].searchHighlight = 0;
+    },
+    sendMessage: function (i) {
+      let user = users[i];
+      if(this.messagePreviews[i].length < 1) return false;
+      let message = this.messagePreviews[i].reduce(function (str, emoji) {
+        return str + emoji.code_points.base + ',';
+      },"");
+      message = message.slice(0,-1);
+      console.log({"message": message});
+      channel.push('message', { user: i, message: message });
+      user.message = "";
     }
   },
   computed: {
@@ -130,14 +154,38 @@ var vm = new vue({
         }, []);
         return emojis;
       });
+    },
+    prettyMessages: function () {
+      return this.messages.map(function (m) {
+        let parts = m.message.split(',');
+        m.prettyParts = parts;
+        return m;
+      });
     }
   }
-});
-  //computed: {
-    // a computed getter
-    //     reversedMessage: function () {
-    //           // `this` points to the vm instance
-    //                 return this.message.split('').reverse().join('')
-    //                     }
-    //                       }
-    //                       })
+};
+
+(function () {
+  return new Promise(function(resolve, reject) {
+    channel.join()
+      .receive("ok", resp => { resolve(resp) })
+      .receive("error", resp => { reject(resp) })
+  })
+  //.then(function () {
+    //return new Promise(function(resolve, reject) {
+      //setTimeout(resolve, 4000);
+    //});
+  //})
+  .then(function (data) {
+    vue_config.data.messages = data.data;
+    console.log({"data": data});
+    var vm = new vue(vue_config);
+    //console.log({"data": data});
+    channel.on("message", data => {
+      console.log({"message": data});
+      vm.messages.push(data);
+    })
+  });
+})();
+
+
