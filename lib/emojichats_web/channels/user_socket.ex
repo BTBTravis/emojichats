@@ -3,6 +3,7 @@ defmodule EmojichatsWeb.UserSocket do
 
   ## Channels
   # channel "room:*", EmojichatsWeb.RoomChannel
+  channel "demo:lobby", EmojichatsWeb.DemoChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
