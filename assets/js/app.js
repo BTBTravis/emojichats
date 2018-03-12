@@ -69,7 +69,7 @@ let t = `
         <p class="late">*Vue + Elixir + Phoenix Framework <a href="https://github.com/BTBTravis/emojichats">view on Github</a></p>
         <p class="early">*<a href="https://www.emojione.com">EmojiOne</a>Licence emojies</p>
       </div>
-      <h3>Emoji Sent: {{messages.length}}</h3>
+      <h3>Emoji Sent: {{totalEmojis}}</h3>
     </li>
   </ul>
 </div>
@@ -185,6 +185,11 @@ let vue_config = {
         m.prettyParts = parts;
         return m;
       });
+    },
+    totalEmojis: function () {
+      return this.prettyMessages.reduce(function (total, message) {
+        return total + message.prettyParts.length;
+      }, 0);
     }
   }
 };
